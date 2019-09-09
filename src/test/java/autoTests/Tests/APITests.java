@@ -4,6 +4,7 @@ import autoTests.ApiTestBase;
 import autoTests.Config;
 import io.qameta.allure.Epic;
 import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.path.json.JsonPath;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -11,6 +12,9 @@ import org.testng.annotations.Test;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.Matchers.*;
 
 @Epic("API Tests")
 public class APITests extends ApiTestBase {
@@ -34,6 +38,13 @@ public class APITests extends ApiTestBase {
                 .when().get(Config.getInstance().getBaseUrlApi())
                 .then().extract().jsonPath();
         Assert.assertEquals(ImageIO.read(new URL(responseJson.get("products[0].images[0].url").toString())).getWidth(), 300, "Размер изображения не соответствует ожидаемому");
+    }
+
+    @Test(description = "2. Delayed POST")
+    public void checkPOSTDelayResponse() {
+        RestAssured.given().filter(new RequestLoggingFilter())
+                .when().get("https://httpbin.org/delay/{delay}", 10)
+                .then().time(greaterThanOrEqualTo(10L), TimeUnit.SECONDS);
     }
 
 }
