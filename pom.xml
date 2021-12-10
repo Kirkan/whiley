@@ -19,7 +19,7 @@
         <aspectj.version>1.9.2</aspectj.version>
         <allure.version>2.7.0</allure.version>
         <allure.maven.version>2.9</allure.maven.version>
-        <log4j2.version>2.11.2</log4j2.version>
+        <log4j2.version>2.15.0</log4j2.version>
         <webdrivermanager.version>3.6.2</webdrivermanager.version>
         <selenide.version>5.2.0</selenide.version>
         <selenium-remote-driver.version>3.141.59</selenium-remote-driver.version>
